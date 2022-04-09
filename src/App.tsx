@@ -1,56 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
+import { selectName } from './features/names/namesSlice';
+import { useAppSelector } from './app/hooks';
+
+import CreateName from './CreateName';
+import PopNames from './DeleteNames';
+
 import './App.css';
 
 function App() {
+  const names = useAppSelector(selectName);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <CreateName/>
+
+      <PopNames />
+      <section>
+        <h3>Names:</h3>
+        { names.length === 0 
+        ? <span>Lista de nomes está vazia.</span>
+        :
+        names.map((name, index) => (
+          <p key={index}>
+            {name}
+          </p>
+        ))}
+      </section>
+
+      <br/>
+      <h3>Contador:</h3>
         <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
     </div>
   );
 }
